@@ -166,7 +166,7 @@ server <- function(input, output) {
           formatC(pc, format = "f", digits = 0), ' %'
         )),
         fontface = "bold",
-        size = 5,
+        size = 8,
         hjust = 0.5,
         vjust = -1,
         position = "stack"
