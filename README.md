@@ -5,4 +5,4 @@ This An app build using Shiny to compute percentage of predictive values for max
 
 You may lauch this app in R/RStudio using the runGitHub command: runGitHub( "app_strength-Harbo", "dambach")
 
-Or you can access it directly at:  [https://damienbachasson.shinyapps.io/app_strength-Harbo/](https://damienbachasson.shinyapps.io/app_strength-Harbo/)
+Or you can access it directly at:  [https://damienbachasson.shinyapps.io/app_strength-Harbo/](https://damienbachasson.shinyapps.io/app_strength-Harbo/).
