@@ -128,51 +128,42 @@ server <- function(input, output) {
 
     
     pc = as.data.frame(pc)
+
+    pc_val    <- pc$pc[1]
+    bar_fill  <- ifelse(pc_val < 90, "#e74c3c", ifelse(pc_val <= 110, "#2ecc71", "#2980b9"))
+    lbl_color <- ifelse(pc_val < 90, "#c0392b", ifelse(pc_val <= 110, "#1e8449", "#1a5276"))
+
     ggplot(pc, aes(x = "", y = pc)) +
-      geom_bar(
-        stat = "identity",
-        colour = "black",
-        fill = "#2980b9",
-        width = .8
-      ) +
-      xlab("") +
-      ylab("Muscle Strength (% Predicted)") +
-      scale_y_continuous(limits = c(0, 200), breaks = seq(0, 200, 20)) +
-      theme_few(base_size = 12) +
-      theme(plot.title = element_text(face = "bold")) +
-      geom_rect(
-        ymin = 110,
-        ymax = 200,
-        xmin = -Inf,
-        xmax = Inf,
-        fill = '#3498db',
-        alpha = 0.2
-      ) +
-      geom_rect(
-        ymin = 90,
-        ymax = 110,
-        xmin = -Inf,
-        xmax = Inf,
-        fill = '#2ecc71',
-        alpha = 0.2
-      ) +
-      geom_rect(
-        ymin = 0,
-        ymax = 90,
-        xmin = -Inf,
-        xmax = Inf,
-        fill = '#e74c3c',
-        alpha = 0.2
-      ) +
+      annotate("rect", xmin = -Inf, xmax = Inf, ymin = 110, ymax = 200, fill = "#2980b9", alpha = 0.15) +
+      annotate("rect", xmin = -Inf, xmax = Inf, ymin = 90,  ymax = 110, fill = "#2ecc71", alpha = 0.15) +
+      annotate("rect", xmin = -Inf, xmax = Inf, ymin = 0,   ymax = 90,  fill = "#e74c3c", alpha = 0.15) +
+      geom_hline(yintercept = 90,  linetype = "dashed", color = "#7f8c8d", linewidth = 0.5) +
+      geom_hline(yintercept = 110, linetype = "dashed", color = "#7f8c8d", linewidth = 0.5) +
+      geom_bar(stat = "identity", fill = bar_fill, width = 0.45, alpha = 0.9) +
+      annotate("text", x = Inf, y = 155, label = "Above normal", hjust = 1.1, vjust = 0.5, size = 3.2, color = "#2471a3", fontface = "italic") +
+      annotate("text", x = Inf, y = 100, label = "Normal",       hjust = 1.1, vjust = 0.5, size = 3.2, color = "#1e8449", fontface = "italic") +
+      annotate("text", x = Inf, y = 45,  label = "Below normal", hjust = 1.1, vjust = 0.5, size = 3.2, color = "#c0392b", fontface = "italic") +
       geom_text(
-        aes(label = paste0(
-          formatC(pc, format = "f", digits = 0), ' %'
-        )),
-        fontface = "bold",
-        size = 8,
-        hjust = 0.5,
-        vjust = -1,
-        position = "stack"
+        aes(label = paste0(formatC(pc, format = "f", digits = 0), "%")),
+        vjust = -0.7, fontface = "bold", size = 11, color = lbl_color
+      ) +
+      scale_y_continuous(limits = c(0, 200), breaks = seq(0, 200, 20), expand = expansion(mult = 0, add = 0)) +
+      labs(title = input$muscle, x = NULL, y = "Muscle Strength (% Predicted)") +
+      theme_minimal(base_size = 13) +
+      theme(
+        plot.title         = element_text(face = "bold", size = 14, hjust = 0.5, margin = margin(b = 10)),
+        axis.text.x        = element_blank(),
+        axis.ticks.x       = element_blank(),
+        axis.title.x       = element_blank(),
+        axis.text.y        = element_text(color = "#2c3e50", size = 11),
+        axis.title.y       = element_text(color = "#2c3e50", size = 12, margin = margin(r = 10)),
+        panel.grid.major.y = element_line(color = "#ecf0f1", linewidth = 0.4),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.background   = element_rect(fill = "white", color = NA),
+        plot.background    = element_rect(fill = "white", color = NA),
+        plot.margin        = margin(t = 14, r = 20, b = 10, l = 10)
       )
   })
 }
