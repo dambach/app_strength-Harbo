@@ -1,5 +1,7 @@
 # ui
 library(shinythemes)
+library(ggplot2)
+library(ggthemes)
 
 ui <- fluidPage(
   titlePanel(
@@ -62,7 +64,7 @@ ui <- fluidPage(
     sliderInput(
       inputId = 'weight',
       label = 'Weight (kg)',
-      min = 0,
+      min = 30,
       max = 200,
       step = 1,
       value = 80
@@ -99,7 +101,7 @@ server <- function(input, output) {
     else
       filename <- "coeff_women.csv"
     
-    coeff <-
+    coeff <- tryCatch(
       read.csv(
         filename,
         header = TRUE,
@@ -109,9 +111,12 @@ server <- function(input, output) {
         fill = TRUE,
         na.strings = c(""),
         comment.char = ""
-      )
+      ),
+      error = function(e) validate(need(FALSE, paste("Failed to load coefficient file:", e$message)))
+    )
     
-    coeff.muscle <- coeff[input$muscle,]
+    coeff.muscle <- coeff[trimws(rownames(coeff)) == input$muscle, ]
+    validate(need(nrow(coeff.muscle) == 1, "Coefficients not found for selected muscle."))
     
     pred <-
       coeff.muscle$I +
@@ -122,8 +127,6 @@ server <- function(input, output) {
     pc = input$strength / pred * 100
 
     
-    library(ggplot2)
-    library(ggthemes)
     pc = as.data.frame(pc)
     ggplot(pc, aes(x = "", y = pc)) +
       geom_bar(
