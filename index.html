@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muscle Strength Norms</title>
+<meta name="description" content="Isokinetic and isometric peak torque of 18 muscle functions compared with reference values from healthy adults (Harbo et al. 2012), as % of predicted and z-score against the lower limit of normal.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.bunny.net">
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=inter:400,500,600,700|space-grotesk:500,600&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<section class="print-only print-head" aria-hidden="true">
+  <p class="print-app">Muscle Strength Norms · dambach.github.io/app_strength-Harbo</p>
+  <h1>Muscle strength report</h1>
+  <dl class="print-meta">
+    <div><dt>Patient ID</dt><dd id="print-patient">—</dd></div>
+    <div><dt>Measurement date</dt><dd id="print-date">—</dd></div>
+    <div><dt>Generated</dt><dd id="print-generated">—</dd></div>
+  </dl>
+</section>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="#top" id="top">
+      <span class="brand-mark">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10"/><path d="M4 12h15"/><path d="M4 18h7"/><path d="M15 3v18"/></svg>
+      </span>
+      <span class="brand-text">
+        <span class="brand-name">Muscle Strength Norms</span>
+        <span class="brand-sub">18 muscle functions · Harbo et al. 2012</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#refs">Reference</a>
+      <a href="#legend">How to read</a>
+      <a class="nav-icon" href="https://github.com/dambach/app_strength-Harbo" aria-label="Source code on GitHub" title="Source code on GitHub">
+        <svg width="22" height="22" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<section class="wrap intro">
+  <h1>Muscle strength compared with reference values from healthy adults</h1>
+  <p class="lead">Isokinetic and isometric peak torque of 18 muscle functions, measured on a computerized dynamometer: % of predicted and z-score against the lower limit of normal (Harbo et al. 2012).</p>
+</section>
+
+<section class="print-only print-inputs" aria-hidden="true">
+  <h2>Patient</h2>
+  <dl class="print-grid" id="print-inputs"></dl>
+</section>
+
+<main class="wrap layout">
+  <form id="inputs" class="card form-card" autocomplete="off" onsubmit="return false">
+    <div class="step"><span class="step-num">1</span><h2>Patient</h2></div>
+
+    <div class="field">
+      <span id="sex-label" class="label">Sex</span>
+      <div class="seg" role="radiogroup" aria-labelledby="sex-label">
+        <label><input type="radio" name="sex" value="male" checked><span>Male</span></label>
+        <label><input type="radio" name="sex" value="female"><span>Female</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <label for="age">Age</label>
+      <div><div class="unit-input"><input id="age" type="number" inputmode="decimal" step="1" value="50"><span>yr</span></div><p class="field-error" id="age-err" hidden></p></div>
+    </div>
+    <div class="field">
+      <label for="height">Height</label>
+      <div><div class="unit-input"><input id="height" type="number" inputmode="decimal" step="1" value="175"><span>cm</span></div><p class="field-error" id="height-err" hidden></p></div>
+    </div>
+    <div class="field">
+      <label for="weight">Weight</label>
+      <div><div class="unit-input"><input id="weight" type="number" inputmode="decimal" step="0.1" value="75"><span>kg</span></div><p class="field-error" id="weight-err" hidden></p></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="step"><span class="step-num">2</span><h2>Measured peak torque</h2></div>
+    <p class="form-hint">Enter only the functions tested. Reference protocol: dominant arm, non-dominant leg.</p>
+    <div id="torque-fields"></div>
+  </form>
+
+  <section id="result" class="card result-card" aria-labelledby="result-title">
+    <div class="result-head">
+      <h2 id="result-title">Result</h2>
+      <p class="measured-summary" id="measured-summary"></p>
+    </div>
+    <p class="summary" id="summary" aria-live="polite"></p>
+
+    <div class="chart">
+      <div class="chart-row chart-head" aria-hidden="true">
+        <div class="name"></div>
+        <div class="plot">
+          <div class="head-labels" id="head-labels"></div>
+          <div class="col-head">% pred.<br>z-score</div>
+        </div>
+      </div>
+      <div id="rows"></div>
+      <div class="chart-row chart-axis" aria-hidden="true">
+        <div class="name"></div>
+        <div class="plot">
+          <div class="axis" id="axis"></div>
+          <div class="col-head">z-score</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="legend" id="legend">
+      <span class="swatch-zone" aria-hidden="true"></span>
+      <span>Shaded zone: below the lower limit of normal (LLN, 5th percentile of healthy adults, z &lt; −1.645). z = (measured − predicted) / residual SD of the sex-specific equation.</span>
+    </p>
+
+    <details class="table-view">
+      <summary>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        Show values as a table
+      </summary>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Function</th><th class="num">Predicted</th><th class="num">LLN</th><th class="num">Measured</th><th class="num">% pred.</th><th class="num">z</th><th>Notes</th></tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+    </details>
+
+    <div class="export">
+      <h3>Export</h3>
+      <div class="export-fields">
+        <div class="export-field">
+          <label for="patient-id">Patient ID <small>optional</small></label>
+          <input id="patient-id" type="text" autocomplete="off" spellcheck="false" placeholder="—" aria-describedby="patient-id-hint">
+          <small class="export-hint" id="patient-id-hint">A pseudonymous code, not a name</small>
+        </div>
+        <div class="export-field">
+          <label for="measurement-date">Measurement date</label>
+          <input id="measurement-date" type="date">
+        </div>
+      </div>
+      <div class="export-actions">
+        <button type="button" class="btn" id="btn-print">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 11v6"/><path d="m9 14 3 3 3-3"/></svg>
+          Save as PDF
+        </button>
+        <button type="button" class="btn" id="btn-csv">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          Download CSV
+        </button>
+      </div>
+      <p class="export-note">For the PDF, choose “Save as PDF” as destination in the window that opens. Patient ID and date are used only in the exported files; nothing is stored or sent.</p>
+    </div>
+  </section>
+</main>
+
+<section id="refs" class="wrap refs" aria-labelledby="refs-title">
+  <h2 id="refs-title">Reference equations</h2>
+  <p class="refs-lead">A result is only interpretable when the measurement follows the reference protocol: device, position, speed, side and trial selection.</p>
+  <article class="card ref-card" id="ref-card"></article>
+</section>
+
+<footer class="wrap site-footer">
+  <p>Written and maintained by <a href="https://github.com/dambach">Damien Bachasson</a>, Inserm Researcher, PT, PhD, HDR. Open source under the MIT License.</p>
+  <p id="privacy">Privacy. No cookies and no tracking. Values entered stay in the browser and are never sent; the PDF and CSV exports are created on this device. Fonts are served by Bunny Fonts (EU). The host, GitHub Pages, logs visitors' IP addresses for security.</p>
+  <p>Disclaimer. For information purposes only. Not a substitute for professional medical advice, diagnosis or treatment. Any question regarding a medical condition or treatment should be addressed to a physician or other qualified health care provider.</p>
+</footer>
+
+<div class="sticky-bar" id="sticky-bar" aria-hidden="true">
+  <div class="sticky-top">
+    <span class="sticky-summary" id="sticky-summary"></span>
+    <a href="#result" tabindex="-1">Details
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+    </a>
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip" role="tooltip"></div>
+
+<script src="js/equations.js"></script>
+<script src="js/export.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
