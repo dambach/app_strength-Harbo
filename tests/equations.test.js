@@ -4,7 +4,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const { FUNCTIONS, JOINTS, LLN_Z, LIMITS, parseField, predict, evaluate } = require('../js/equations.js');
+const { FUNCTIONS, JOINTS, PROTOCOL, fnMode, LLN_Z, LIMITS, parseField, predict, evaluate } = require('../js/equations.js');
 
 const fn = id => FUNCTIONS.find(f => f.id === id);
 const close = (actual, expected, tol, msg) =>
@@ -77,4 +77,12 @@ test('missing or invalid patient values are not computed', () => {
   assert.match(r.reason, /Check height/);
   assert.equal(parseField('1', LIMITS.height).invalid, true);
   assert.ok(Number.isNaN(parseField('', LIMITS.torque).value));
+});
+
+test('test positions: one per joint, and an angle for every isometric function', () => {
+  assert.deepEqual(Object.keys(PROTOCOL), JOINTS);
+  for (const j of JOINTS) for (const k of ['setup', 'axis', 'rom', 'isometric', 'gravity']) assert.ok(PROTOCOL[j][k], `${j} ${k}`);
+  for (const f of FUNCTIONS) assert.equal(Boolean(f.angle), f.mode === 'isometric', f.id);
+  // Supplementary material: isometric knee extension at 70° of flexion, not 90°.
+  assert.equal(fnMode(fn('knee-ext-im')), 'Isometric, knee 70° flexion');
 });

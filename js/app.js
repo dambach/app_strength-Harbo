@@ -208,18 +208,29 @@ function renderRefs() {
       <td class="num">${i}</td><td class="num">${a}</td><td class="num">${h}</td><td class="num">${w}</td>
       <td class="num">${f.rsd[s]}</td><td class="num">${f.r2[s].toFixed(2)}</td></tr>`;
   }).join('')).join('');
+  const posRows = JOINTS.map(j => {
+    const p = PROTOCOL[j];
+    return `<tr><th scope="row">${j}</th><td>${p.setup}</td><td>${p.axis}</td><td>${p.rom}</td><td>${p.isometric}</td></tr>`;
+  }).join('');
   $('ref-card').innerHTML = `
     <h3>Harbo et al. 2012</h3>
     <div class="pills"><span class="pill accent">Biodex System 3 PRO</span><span class="pill">Peak torque, N·m</span></div>
     <dl>
-      <dt>Position</dt><dd>Seated, trunk strapped, dynamometer axis aligned with the joint axis</dd>
+      <dt>Position</dt><dd>Seated with shoulder and abdominal straps (hip: supine), hands on the seat handles when possible; joint axis aligned with the dynamometer axis by inspection and palpation</dd>
       <dt>Side</dt><dd>Dominant arm, non-dominant leg</dd>
-      <dt>Isokinetic</dt><dd>Concentric, 8 reciprocal contractions; knee and wrist 90°/s, shoulder, elbow, hip and ankle 60°/s; gravity corrected</dd>
-      <dt>Isometric</dt><dd>3 contractions of 5 s at neutral joint positions (angles not reported)</dd>
+      <dt>Warm-up</dt><dd>5–10 submaximal and 1–2 maximal contractions; standardized recorded verbal encouragement</dd>
+      <dt>Isokinetic</dt><dd>Concentric, 8 reciprocal contractions 15 s apart; knee and wrist 90°/s, shoulder, elbow, hip and ankle 60°/s; gravity corrected, no preload; peak torque taken at the preset speed only. Tested before isometric</dd>
+      <dt>Isometric</dt><dd>3 contractions of 5 s, 40 s apart, at the angles below</dd>
       <dt>Value kept</dt><dd>Highest peak torque</dd>
       <dt>Reference group</dt><dd>178 healthy non-athletic Danish adults: ${SAMPLE.male.n} men aged ${SAMPLE.male.age.join('–')} yr, ${SAMPLE.female.n} women aged ${SAMPLE.female.age.join('–')} yr</dd>
       <dt>Limitation</dt><dd>Age, height and weight explain 8–63 % of the variance; the wrist and ankle dorsiflexion equations barely narrow the normal range</dd>
     </dl>
+    <h4 class="sub-head">Test positions</h4>
+    <div class="table-wrap"><table class="pos-table">
+      <thead><tr><th>Joint</th><th>Setup</th><th>Axis</th><th>Isokinetic range</th><th>Isometric</th></tr></thead>
+      <tbody>${posRows}</tbody>
+    </table></div>
+    <p class="cite">Positions: ${SOURCE.esm}, Harbo et al. 2012.</p>
     <p class="eq">Predicted peak torque (N·m) = intercept + a × age (yr) + h × height (m) + w × weight (kg), sex-specific</p>
     <details class="eq-details">
       <summary>Show the 18 equations</summary>

@@ -257,6 +257,10 @@ td.notes { color: var(--ink-2); }
 .eq-details summary { cursor: pointer; font-weight: 500; color: var(--accent); }
 .eq-details table { font-size: 12.5px; }
 .eq-details td small, td small { color: var(--muted); }
+.sub-head { margin: 20px 0 0; font-size: 14px; font-weight: 600; }
+.pos-table { font-size: 12.5px; min-width: 640px; }
+.pos-table tbody th { color: var(--ink); font-size: 12.5px; text-transform: none; letter-spacing: 0; }
+.pos-table td:nth-child(5) { font-weight: 500; }
 
 /* Reference cards */
 .refs { margin-top: 48px; }
@@ -401,6 +405,8 @@ td.notes { color: var(--ink-2); }
   .ref-card dl { grid-template-columns: 68px minmax(0, 1fr); gap: 1px 8px; font-size: 7.5pt; }
   .eq { margin-top: 4px; padding: 4px 6px; font-size: 6.5pt; line-height: 1.4; }
   .cite { margin-top: 4px; font-size: 7pt; }
+  .sub-head { margin-top: 6px; font-size: 8pt; }
+  .pos-table, .pos-table tbody th { min-width: 0; font-size: 7pt; }
   .site-footer { margin-top: 8px; padding-top: 6px; font-size: 7pt; }
   .site-footer p { margin-bottom: 3px; max-width: none; }
 }

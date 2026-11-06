@@ -42,6 +42,7 @@ test('CSV: BOM, header and one row per function entered', () => {
   assert.equal(rows[0].contraction, 'isokinetic');
   assert.equal(rows[0].speed, '90°/s');
   assert.equal(rows[1].harbo_label, 'ankle extension');
+  assert.equal(rows[0].isometric_angle, '');
 });
 
 test('CSV values use dot decimals and match the result', () => {
@@ -51,6 +52,11 @@ test('CSV values use dot decimals and match the result', () => {
   assert.equal(out[0].z_score, rows[0].r.z.toFixed(2));
   assert.equal(out[0].status, statusOf(rows[0].r));
   assert.equal(out[0].patient_id, 'P-001');
+});
+
+test('isometric angle column', () => {
+  const { rows } = toObjects(buildCsv(p, rowsFor([['knee-ext-im', 250]]), meta));
+  assert.equal(rows[0].isometric_angle, 'knee 70° flexion');
 });
 
 test('quoting of fields with commas or quotes', () => {

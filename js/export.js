@@ -9,7 +9,7 @@ const StrengthExport = (() => {
   const CSV_COLUMNS = [
     'patient_id', 'measurement_date', 'generated_at',
     'sex', 'age_yr', 'height_cm', 'weight_kg',
-    'function', 'contraction', 'speed', 'harbo_label',
+    'function', 'contraction', 'speed', 'isometric_angle', 'harbo_label',
     'predicted_nm', 'lln_nm', 'measured_nm', 'pct_predicted', 'z_score', 'r2',
     'status', 'notes'
   ];
@@ -38,7 +38,7 @@ const StrengthExport = (() => {
       const row = [
         meta.patientId || '', meta.measurementDate || '', meta.generatedAt || '',
         p.male ? 'male' : 'female', raw(p.age), raw(p.height), raw(p.weight),
-        nameOf(f), f.mode, f.speed || '', f.harbo || '',
+        nameOf(f), f.mode, f.speed || '', f.angle || '', f.harbo || '',
         r.predicted > 0 ? nm(r.predicted) : '', r.predicted > 0 ? nm(r.lln) : '',
         r.ok ? nm(r.measured) : '', r.ok ? r.pct.toFixed(1) : '', r.ok ? r.z.toFixed(2) : '',
         r.ok ? r.r2.toFixed(2) : '', statusOf(r), notesOf(r)
